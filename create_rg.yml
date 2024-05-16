@@ -4,5 +4,5 @@
   tasks:
     - name: Creating resource group
       azure_rm_resourcegroup:
-        name: "anisibly-deployed-rg"
+        name: "ansibly-deployed"
         location: "southcentralus"
