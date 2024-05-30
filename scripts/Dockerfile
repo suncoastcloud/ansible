@@ -1,8 +1,9 @@
+# python3.9 base container with ansible with azure collection installed
+
 FROM python:3.9
 
 # create and activate virtual environment
 RUN python3 -m venv /opt/venv
-
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Update and install dependencies
