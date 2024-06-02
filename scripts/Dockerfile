@@ -15,8 +15,8 @@ RUN apt-get update && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-RUN pip install 'ansible[azure]'
+RUN pip3 install --upgrade pip && \
+    pip3 install pywinrm 'ansible[azure]'
 # RUN pip3 install -r /usr/lib/python3/dist-packages/ansible_collections/azure/azcollection/requirements-azure.txt  
 # need to install azcollection requirements manually after the build. #To do: Figure out how to bring that into the Dockerfile
 
