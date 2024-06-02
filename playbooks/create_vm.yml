@@ -1,27 +1,28 @@
 - name: Create Azure VM
   hosts: localhost
   connection: local
+
   tasks:
   - name: Create virtual network
     azure_rm_virtualnetwork:
       resource_group: ansibly-deployed-rg
       name: myVnet
       address_prefixes: "10.0.0.0/16"
+
   - name: Add subnet
     azure_rm_subnet:
       resource_group: ansibly-deployed-rg
       name: mySubnet
       address_prefix: "10.0.1.0/24"
       virtual_network: myVnet
+
   - name: Create public IP address
     azure_rm_publicipaddress:
       resource_group: ansibly-deployed-rg
       allocation_method: Static
       name: myPublicIP
     register: output_ip_address
-  - name: Public IP of VM
-    debug:
-      msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+
   - name: Create Network Security Group that allows SSH
     azure_rm_securitygroup:
       resource_group: ansibly-deployed-rg
@@ -33,7 +34,8 @@
           access: Allow
           priority: 1001
           direction: Inbound
-  - name: Create virtual network interface card
+
+  - name: Create virtual network interface card for vm 1
     azure_rm_networkinterface:
       resource_group: ansibly-deployed-rg
       name: myNIC
@@ -41,19 +43,47 @@
       subnet: mySubnet
       public_ip_name: myPublicIP
       security_group: myNetworkSecurityGroup
-  - name: Create VM
+
+  - name: Create virtual network interface card for vm 2
+    azure_rm_networkinterface:
+      resource_group: ansibly-deployed-rg
+      name: myNIC2
+      virtual_network: myVnet
+      subnet: mySubnet
+      security_group: myNetworkSecurityGroup
+
+  - name: Create VM 1
     azure_rm_virtualmachine:
       resource_group: ansibly-deployed-rg
       name: myVM
-      vm_size: Standard_DS1_v2
-      admin_username: azureuser
+      vm_size: Standard_B1ls
+      admin_username: adminuser
       ssh_password_enabled: false
       ssh_public_keys:
-        - path: /home/azureuser/.ssh/authorized_keys
-          key_data: "<public_key>"
+        - path: /home/adminuser/.ssh/authorized_keys
+          key_data: "<public key>"
       network_interfaces: myNIC
       image:
-        offer: CentOS
-        publisher: OpenLogic
-        sku: '7.5'
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '19_04-daily-gen2'
         version: latest
+      managed_disk_type: Standard_LRS  
+
+  - name: Create VM 2
+    azure_rm_virtualmachine:
+      resource_group: ansibly-deployed-rg
+      name: myVM2
+      vm_size: Standard_B1ls
+      admin_username: adminuser
+      ssh_password_enabled: false
+      ssh_public_keys:
+        - path: /home/adminuser/.ssh/authorized_keys
+          key_data: "<public key>"
+      network_interfaces: myNIC2
+      image:
+        offer: UbuntuServer
+        publisher: Canonical
+        sku: '19_04-daily-gen2'
+        version: latest
+      managed_disk_type: Standard_LRS  
