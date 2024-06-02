@@ -1,9 +1,15 @@
+# python3.9 base container with ansible with azure collection installed
+
 FROM python:3.9
 
+<<<<<<< HEAD
 # Create a working directory named ansible
 WORKDIR /ansible
 
 # create virtal environment and set in path
+=======
+# create and activate virtual environment
+>>>>>>> 80d1119749ee60bb1446ba1e5baa064593c264d7
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
