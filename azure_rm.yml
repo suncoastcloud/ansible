@@ -1,0 +1,15 @@
+plugin: azure_rm
+
+include_vm_resource_groups:
+  - ansibly-deployed-rg
+auth_source: env
+
+# plain_host_names: yes
+
+conditional_groups:
+  linux: "'UbuntuServer' in image.offer"
+  windows: "'WindowsServer' in image.offer"
+
+keyed_groups:
+ - key: tags.applicationRole  
+   #separator: ''

@@ -1,3 +1,4 @@
+# creates 2 vms
 - name: Create Azure VM
   hosts: localhost
   connection: local

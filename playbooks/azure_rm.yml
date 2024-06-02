@@ -1,4 +1,0 @@
-plugin: azure_rm
-include_vm_resource_groups:
-  - ansibly-deployed-rg
-auth_source: env
