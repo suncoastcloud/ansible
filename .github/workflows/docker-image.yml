@@ -24,9 +24,6 @@ jobs:
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       
     - name: Build and push Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./scripts/Dockerfile
-        push: true
-        tags: suncoastcloud/ansible-container:latest
+      run: |
+        docker build --no-cache -t suncoastcloud/ansible-container:latest .
+        docker push suncoastcloud/ansible-container:latest
