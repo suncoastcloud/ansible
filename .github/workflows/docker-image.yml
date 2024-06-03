@@ -29,4 +29,4 @@ jobs:
         context: .
         file: ./scripts/Dockerfile
         push: true
-        tags: suncoastcloud/ansible-containe:latest
+        tags: suncoastcloud/ansible-contain:latest
