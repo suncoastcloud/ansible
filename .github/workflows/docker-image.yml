@@ -27,5 +27,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
+        file: ./scripts/Dockerfile
         push: true
         tags: suncoastcloud/ansible-containe:latest
