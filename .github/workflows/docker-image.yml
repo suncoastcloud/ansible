@@ -26,4 +26,4 @@ jobs:
         context: ./scripts
         dockerfile: Dockerfile
         push: true
-        tags: suncoastcloud/ansible-image:latest
+        tags: suncoastcloud/ansible-python39:latest
